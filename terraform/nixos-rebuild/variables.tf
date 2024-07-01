@@ -31,3 +31,13 @@ variable "ignore_systemd_errors" {
   description = "Ignore systemd errors happening during deploy"
   default = false
 }
+
+variable "switch_arg" {
+  type = string
+  description = "One required argument, which specifies the desired operation."
+  default = "switch"
+  validation {
+    condition     = contains(["switch", "boot", "test"], var.switch_arg)
+    error_message = "The argument must be one of 'switch', 'boot', or 'test'."
+  }
+}

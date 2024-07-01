@@ -2,16 +2,17 @@
 
 set -uex -o pipefail
 
-if [ "$#" -ne 5 ]; then
-  echo "USAGE: $0 NIXOS_SYSTEM TARGET_USER TARGET_HOST TARGET_PORT IGNORE_SYSTEMD_ERRORS" >&2
+if [ "$#" -ne 6 ]; then
+  echo "USAGE: $0 SWITCH_ARG NIXOS_SYSTEM TARGET_USER TARGET_HOST TARGET_PORT IGNORE_SYSTEMD_ERRORS" >&2
   exit 1
 fi
 
-NIXOS_SYSTEM=$1
-TARGET_USER=$2
-TARGET_HOST=$3
-TARGET_PORT=$4
-IGNORE_SYSTEMD_ERRORS=$5
+SWITCH_ARG=$1
+NIXOS_SYSTEM=$2
+TARGET_USER=$3
+TARGET_HOST=$4
+TARGET_PORT=$5
+IGNORE_SYSTEMD_ERRORS=$6
 shift 3
 
 TARGET="${TARGET_USER}@${TARGET_HOST}"
@@ -46,7 +47,7 @@ until NIX_SSHOPTS="${sshOpts[*]}" nix copy -s --experimental-features nix-comman
   try=$((try + 1))
 done
 
-switchCommand="nix-env -p /nix/var/nix/profiles/system --set $(printf "%q" "$NIXOS_SYSTEM"); /nix/var/nix/profiles/system/bin/switch-to-configuration switch"
+switchCommand="nix-env -p /nix/var/nix/profiles/system --set $(printf "%q" "$NIXOS_SYSTEM"); /nix/var/nix/profiles/system/bin/switch-to-configuration ${SWITCH_ARG}"
 if [[ $TARGET_USER != "root" ]]; then
   switchCommand="sudo bash -c '$switchCommand'"
 fi

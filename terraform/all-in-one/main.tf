@@ -49,6 +49,7 @@ module "nixos-rebuild" {
   target_user = var.target_user
   target_port = var.target_port
   ignore_systemd_errors = var.ignore_systemd_errors
+  switch_arg = var.switch_arg
 }
 
 output "result" {
