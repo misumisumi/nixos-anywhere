@@ -107,3 +107,9 @@ variable "nix_options" {
   description = "the options of nix"
   default = null
 }
+
+variable "ignore_systemd_errors" {
+  type = bool
+  description = "Ignore systemd errors happening during deploy"
+  default = false
+}
