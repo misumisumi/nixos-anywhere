@@ -25,7 +25,7 @@ if [[ -n ${flake-} ]]; then
 else
   args+=("--store-paths" "${nixos_partitioner}" "${nixos_system}")
 fi
-if [[ ${SSH_PASS} ]]; then
+if [[ -n ${SSH_PASS} ]]; then
   args+=("--env-password")
 fi
 
